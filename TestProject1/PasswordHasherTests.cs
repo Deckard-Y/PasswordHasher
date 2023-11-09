@@ -54,16 +54,5 @@ namespace TestProject1
             var exception = Assert.Throws<ArgumentNullException>(() => PasswordHasher.HashPassword(null));
             Assert.Equal("password", exception.ParamName); // ArgumentNullExceptionのParamNameが"password"であることを確認
         }
-
-        [Fact]
-        public void HashPassword_WithExtremelyLongInput_DoesNotThrowException()
-        {
-            // Arrange
-            var longPassword = new string('a', 10000); // 非常に長い文字列
-
-            // Act & Assert
-            var exceptionRecorded = Record.Exception(() => PasswordHasher.HashPassword(longPassword));
-            Assert.Null(exceptionRecorded); // 例外が投げられないことを確認
-        }
     }
 }

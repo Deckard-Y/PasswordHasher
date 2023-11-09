@@ -7,14 +7,10 @@ public static class PasswordHasher
 {
     public static string HashPassword(string password)
     {
-        if (password == null)
-        {
-            // nameof演算子を使って引数の名前を例外に渡す
-            throw new ArgumentNullException(nameof(password));
-        }
+
         using (SHA256 sha256Hash = SHA256.Create())
         {
-            byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+            byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(InputChecker(password)));
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < bytes.Length; i++)
             {
@@ -26,6 +22,10 @@ public static class PasswordHasher
 
     public static string InputChecker(string password)
     {
+        if (password == null)
+        {
+            throw new ArgumentNullException(nameof(password));
+        }
         if (string.IsNullOrWhiteSpace(password))
         {
             throw new ArgumentException("Password cannot be null, empty, or whitespace.", nameof(password));
